@@ -9,9 +9,10 @@ def index(request):
     return render(request, 'index.html')
 
 def tweet_list(request):
-    tweet = Tweet.objects.all().order_by('-created_at')
+    tweets = Tweet.objects.all().order_by('-created_at')
+    # print(tweets)
 
-    return render(request, 'tweet_list.html', {'tweet':tweet})
+    return render(request, 'tweet_list.html', {'tweets':tweets})
 
 def tweet_create(request):
     if request.method == 'POST':
@@ -27,7 +28,7 @@ def tweet_create(request):
 
     return render(request, 'tweet_create.html', {'form':form})
 
-def tweet_update(request, tweet_id):
+def tweet_edit(request, tweet_id):
     tweet = get_object_or_404(Tweet, pk=tweet_id, user=request.user)
     if request.method == 'POST':
         form = TweetForm(request.POST, request.FILES, instance=tweet)
